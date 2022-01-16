@@ -64,12 +64,12 @@ df6 = pd.DataFrame(com2)
 
 # 5. loc, iloc 원하는 위치 데이터 추출
 
-index = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'g', 'h', 'i']
+# index = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'g', 'h', 'i']
 df5 = pd.DataFrame(
   {'a' : [i for i in range(1,11)],
    'b' : [i for i in range(11,21)],
    'c' : [i for i in range(21,31)]
-   }, index = index)
+   })
 
 # 한번에 두 개 추출 불가
 # print(df5['a', 'b'])
@@ -82,10 +82,14 @@ df5 = pd.DataFrame(
 # print(df5.loc['c':])
 # print(df5)
 
-df_loc = df5.loc[['f', 'i']]
+# df_loc = df5.loc[['f', 'i']]
 
 # print(df_loc)
 
 df_iloc = df.iloc[:5, [0, 1, 2]]
 
-print(df_iloc)
+# print(df_iloc)
+
+# print(df[['a', 'c']])
+
+print(df5[df5['a'] >= 3][['a', 'c']])
