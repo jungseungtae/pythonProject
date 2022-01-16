@@ -40,7 +40,7 @@ df = pd.DataFrame({'a' : [1,2,3,1,2,3], 'b' : [4,5,6,6,7,8],'c' : [7,8,9,10,11,1
 # print(a.unique()[2])
 
 # err. 시리즈는 동시에 두 가지 컬럼을 호출 할 수 없다.
-print(df['a', 'b'])
+# print(df['a', 'b'])
 
 a = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
 df3 = pd.DataFrame(a)
@@ -62,4 +62,30 @@ df6 = pd.DataFrame(com2)
 # print(df5)
 # print(df6)
 
-# loc, iloc 원하는 위치 데이터 추출
+# 5. loc, iloc 원하는 위치 데이터 추출
+
+index = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'g', 'h', 'i']
+df5 = pd.DataFrame(
+  {'a' : [i for i in range(1,11)],
+   'b' : [i for i in range(11,21)],
+   'c' : [i for i in range(21,31)]
+   }, index = index)
+
+# 한번에 두 개 추출 불가
+# print(df5['a', 'b'])
+
+# 배열을 두 개로 각각 추출
+# print(df5[['a', 'b']])
+
+# 각각의 배열에 첫 번째 데이터 추출
+# print(df5.loc['i'])
+# print(df5.loc['c':])
+# print(df5)
+
+df_loc = df5.loc[['f', 'i']]
+
+# print(df_loc)
+
+df_iloc = df.iloc[:5, [0, 1, 2]]
+
+print(df_iloc)
