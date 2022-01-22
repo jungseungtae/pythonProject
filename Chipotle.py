@@ -66,13 +66,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # item_name을 인덱스로 설정하여 판매량을 그래프로 표현
-item_name_list = item_quantity.index.tolist()
-x_pos = np.arange(len(item_name_list))
-order_cnt = item_quantity.values.tolist()
-
-plt.bar(x_pos, order_cnt, align = 'center')
-plt.ylabel('ordered_item_count')
-plt.title('Distribution of all orderd item')
+# item_name_list = item_quantity.index.tolist()
+# x_pos = np.arange(len(item_name_list))
+# order_cnt = item_quantity.values.tolist()
+#
+# plt.bar(x_pos, order_cnt, align = 'center')
+# plt.ylabel('ordered_item_count')
+# plt.title('Distribution of all orderd item')
 
 # plt.show()
 
@@ -112,6 +112,47 @@ order_price_des = chipo.groupby('order_id')['item_price'].sum().describe()
 orderid_group = chipo.groupby('order_id').sum()
 results = orderid_group[orderid_group.item_price >= 10]
 
-# print(results[:10])
-# print(results.index.values)
+# 각 아이템의 가격 구하기
+chipo_one_item = chipo[chipo.quantity == 1]
+price_per_item = chipo_one_item.groupby('item_name').min()
+price_per_item.sort_values(by = 'item_price', ascending = False)[:10]
+
+# 아이템 가격 분포 그래프 출력
+# item_price_list = price_per_item.index.tolist()
+# x_pos = np.arange(len(item_price_list))
+item_price = price_per_item['item_price'].tolist()
+#
+# plt.bar(x_pos, item_price, align = 'center')
+# plt.ylabel('item price($)')
+# plt.title('Distribution of item price')
+
+# plt.show()
+
+# 히스토그램
+# plt.hist(item_price)
+# plt.ylabel('counts')
+# plt.title('Histogram of Item Price')
+#
+# plt.show()
+
+# 가장 비싼 주문에서 item 판매 개수
+top_order_cnt = chipo.groupby('order_id').sum().sort_values(by = 'item_price', ascending = False)[:5]
+
+# 특정 메뉴 주문 횟수 구하기
+chipo_salad = chipo[chipo['item_name'] == 'Veggie Salad Bowl']
+chipo_salad = chipo_salad.drop_duplicates(['item_name', 'order_id'])
+
+# print(len(chipo_salad))
+# print(chipo_salad.head(5))
+
+# 메뉴를 2개 이상 주문한 횟수
+chipo_chicken = chipo[chipo['item_name'] == 'Chicken Bowl']
+chipo_chicken_result = chipo_chicken[chipo_chicken['quantity'] >= 2]
+
+# 2개 이상 주문한 고객들의 메뉴 총 주문 수량
+chipo_chicken_ordersum = chipo_chicken.groupby('order_id').sum()['quantity']
+chipo_chicken_total_result = chipo_chicken_ordersum[chipo_chicken_ordersum >= 2]
+
+# print(len(chipo_chicken_total_result))
+# print(chipo_chicken_total_result)
 
