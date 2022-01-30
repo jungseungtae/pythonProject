@@ -85,7 +85,7 @@ beer_top = drinks.groupby('continent').beer_servings.mean().idxmax()
 # means = result['mean'].tolist()
 # mins = result['min'].tolist()
 # maxs = result['max'].tolist()
-# sums = result['sum'].tolist()\
+# sums = result['sum'].tolist()
 #
 # index = np.arange(n_groups)
 # bar_width = 0.1
@@ -100,20 +100,41 @@ beer_top = drinks.groupby('continent').beer_servings.mean().idxmax()
 # plt.show()
 
 # 대륙별 퓨어 알콜
-continents = continent_mean.index.tolist()
-continents.append('mean')
+# continents = continent_mean.index.tolist()
+# continents.append('mean')
+#
+# x_pos = np.arange(len(continents))
+# alcohol = continent_mean.tolist()
+# alcohol.append(total_mean)
+#
+# bar_list = plt.bar(x_pos, alcohol, align = 'center', alpha = 0.5)
+# bar_list[len(continents) - 1].set_color('g')
+# plt.plot([0, 6], [total_mean, total_mean], 'k--')
+# plt.xticks(x_pos, continents)
+#
+# plt.ylabel('Total litres of Pure alcohol')
+# plt.title('Total litres of Pure alcohol by Continent')
+#
+# plt.show()
 
-x_pos = np.arange(len(continents))
-alcohol = continent_mean.tolist()
-alcohol.append(total_mean)
+# 대륙별 맥주 소비량
+# beer_mean = drinks.groupby('continent')['beer_servings'].mean()
 
-bar_list = plt.bar(x_pos, alcohol, align = 'center', alpha = 0.5)
-bar_list[len(continents) - 1].set_color('r')
-plt.plot([0, 6], [total_mean, total_mean], 'k--')
-plt.xticks(x_pos, continents)
+beer_group = drinks.groupby('continent')['beer_servings'].sum()
+continents = beer_group.index.tolist()
 
-plt.ylabel('Total litres of Pure alcohol')
-plt.title('Total litres of Pure alcohol by Continent')
+# x_pos = np.arange(len(continents))
+y_pos = np.arange(len(continents))
+alcohol = beer_group.tolist()
+
+bar_list = plt.bar(y_pos, alcohol, align = 'center', alpha = 0.5)
+bar_list[continents.index('EU')].set_color('r')
+
+# plt.plot([0, 6], [beer_mean, beer_mean], 'k--')
+# plt.xticks(x_pos, continents)
+
+plt.xticks(y_pos, continents)
+plt.ylabel('beer Servings')
+plt.title('Beer servings by Continent')
 
 plt.show()
-
